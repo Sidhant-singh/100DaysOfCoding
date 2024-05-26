@@ -3,14 +3,13 @@ class Solution {
         int n = nums1.length;
         int m = nums2.length;
         int totalLength = n + m;
-        int target = (totalLength + 1) / 2; // Target index for median
+        int target = (totalLength + 1) / 2; 
 
         // Ensure nums1 is smaller or equal in size
         if (n > m) {
             return findMedianSortedArrays(nums2, nums1);
         }
 
-        // Binary search on nums1
         int left = 0;
         int right = n;
 
