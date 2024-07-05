@@ -1,48 +1,53 @@
 class Solution {
-    public int[] searchRange(int[] nums, int target) {
-        int []arr = {-1,-1};
-        int n = nums.length;
+    public int[] searchRange(int[] arr, int target) {
+        int []res = {-1,-1};
+        int n = arr.length;
         int low = 0;
         int high = n-1;
-        boolean flag = false; //element not present
-//         check the element wheather it is present or not
+        int first = -1;
+        int last = -1;
+//         finding the first occurrence
         while(low<=high){
             int mid = low + (high-low)/2;
-            if(nums[mid] == target){
-                flag = true;
-                break;
+            if(arr[mid] == target){
+                if(mid>0 && arr[mid] == arr[mid-1]) high = mid-1;
+                else {
+                    first = mid;
+                    break;
+                }
             }
-            else if(nums[mid]<target) low=mid+1;
-            else if(nums[mid]>target) high=mid-1;
+            
+            else if(arr[mid]>target){
+                high = mid-1;
+            }
+            else if(arr[mid]<target){
+                low = mid+1;
+            }
         }
-        if(flag==false) return arr;
+        res[0] = first;
+//         finding the last occurrence
+        low = 0;
+        high = n-1;
+        while(low<=high){
+            int mid = low + (high-low)/2;
+            if(arr[mid] == target){
+                if(mid+1<n && arr[mid] == arr[mid+1]) low = mid+1;
+                else {
+                    last = mid;
+                    break;
+                }
+            }
+            
+            else if(arr[mid]>target){
+                high = mid-1;
+            }
+            else if(arr[mid]<target){
+                low = mid+1;
+            }
+        }
+        res[1] = last;
+        return res;
         
-//         find the lower Bound of the target
-        low = 0;
-        high = n-1;
-        int lb = n;
-        while(low<=high){
-            int mid = low + (high-low)/2;
-            if(nums[mid]>=target){
-                lb = Math.min(lb,mid);
-                high = mid-1;
-            }
-            else low = mid+1;
-        }
-        arr[0] = lb;
-//         find the upper Bound of the target
-        low = 0;
-        high = n-1;
-        int ub = n;
-        while(low<=high){
-            int mid = low + (high-low)/2;
-            if(nums[mid]>target){
-                ub = Math.min(ub,mid);
-                high = mid-1;
-            }
-            else low = mid+1;
-        }
-        arr[1] = ub-1;
-        return arr;
+        
     }
 }
