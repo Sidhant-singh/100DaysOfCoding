@@ -20,6 +20,7 @@ class Solution {
             prev = curr;
             curr = Next;
         }
+        
         return prev;
-    }
+}
 }
