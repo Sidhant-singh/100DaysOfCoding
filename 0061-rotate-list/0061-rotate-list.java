@@ -34,11 +34,14 @@ class Solution {
             fast = fast.next;
         }
         
-        ListNode newNode = slow.next;
-        slow.next = null;
+        // ListNode newNode = slow.next;
+        // slow.next = null;
+        // fast.next = head;
         fast.next = head;
+        head = slow.next;
+        slow.next = null;
         
-        return newNode;
+        return head;
         
         
     }
