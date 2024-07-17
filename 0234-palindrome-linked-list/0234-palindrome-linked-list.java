@@ -9,7 +9,6 @@
  * }
  */
 class Solution {
-    
     public ListNode reverse(ListNode head){
         ListNode prev = null;
         ListNode curr = head;
@@ -26,26 +25,23 @@ class Solution {
     }
     public boolean isPalindrome(ListNode head) {
         if(head.next == null) return true;
-//         creating a deep copy
-        ListNode newHead = new ListNode(head.val);
-        ListNode temp1 = head.next;
-        ListNode temp2 = newHead;
         
-        while(temp1!=null){
-            ListNode newNode = new ListNode(temp1.val);
-            temp2.next = newNode;
-            temp2 = temp2.next;
-            temp1 = temp1.next;
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
         }
         
-        newHead = reverse(newHead);
+//         slow is in the right middle 
+        ListNode j = reverse(slow);
+        ListNode i = head;
         
-        temp1 = head;
-        temp2 = newHead;
-        while(temp1!=null){
-            if(temp1.val!=temp2.val) return false;
-            temp1 = temp1.next;
-            temp2 = temp2.next;
+        while(j!=null){
+            if(i.val!=j.val) return false;
+            i=i.next;
+            j=j.next;
         }
         return true;
     }
