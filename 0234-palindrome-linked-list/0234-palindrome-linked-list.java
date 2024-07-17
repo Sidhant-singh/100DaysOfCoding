@@ -21,27 +21,32 @@ class Solution {
             prev = curr;
             curr = Next;
         }
+        
         return prev;
     }
     public boolean isPalindrome(ListNode head) {
-        ListNode slow = head;
-        ListNode fast = head;
+        if(head.next == null) return true;
+//         creating a deep copy
+        ListNode newHead = new ListNode(head.val);
+        ListNode temp1 = head.next;
+        ListNode temp2 = newHead;
         
-        while(fast.next!=null && fast.next.next!=null){
-            slow = slow.next;
-            fast = fast.next.next;
+        while(temp1!=null){
+            ListNode newNode = new ListNode(temp1.val);
+            temp2.next = newNode;
+            temp2 = temp2.next;
+            temp1 = temp1.next;
         }
-        ListNode temp = reverse(slow.next);
-        slow.next = temp;
-        ListNode p1 = head;
-        ListNode p2 = slow.next;
-        while(p2!=null){
-            if(p1.val!=p2.val){
-                return false;
-            }
-            p1 = p1.next;
-            p2 = p2.next;
-         }
+        
+        newHead = reverse(newHead);
+        
+        temp1 = head;
+        temp2 = newHead;
+        while(temp1!=null){
+            if(temp1.val!=temp2.val) return false;
+            temp1 = temp1.next;
+            temp2 = temp2.next;
+        }
         return true;
     }
 }
