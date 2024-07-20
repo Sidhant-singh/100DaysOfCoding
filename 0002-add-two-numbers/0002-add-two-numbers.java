@@ -32,6 +32,7 @@ class Solution {
                 carry = 0;
             }
         }
+//         if after the loop carry remains 1 it means we have to make a node of it and add it to the end of the LL. 
         if(carry == 1){
             ListNode newNode = new ListNode(1);
             temp.next = newNode;
