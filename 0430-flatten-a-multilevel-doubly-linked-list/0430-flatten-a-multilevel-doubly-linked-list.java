@@ -9,23 +9,22 @@ class Node {
 */
 
 class Solution {
+//     Using recursion
     public Node flatten(Node head) {
         Node temp = head;
         while(temp!=null){
-            Node t = temp.next;
+            Node n = temp.next;
             if(temp.child!=null){
                 Node c = flatten(temp.child);
+                Node d = c;
+                while(d.next!=null) d = d.next;
                 temp.next = c;
                 c.prev = temp;
-//              moving c ahead.
-                while(c.next!=null){
-                    c = c.next;
-                }
-                c.next = t;
-                if(t!=null) t.prev = c;
+                d.next = n;
+                if(n!=null) n.prev = d;
+                temp.child = null; //making all child null and making it into the single ll
             }
-            temp.child = null; //vvimp
-            temp = t;
+            temp = n;
         }
         return head;
     }
