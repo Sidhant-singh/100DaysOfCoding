@@ -2,7 +2,6 @@ class Solution {
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<Character>();
         
-        // Loop through every character in the string
         for (char c : s.toCharArray()) {
             // If the character is an opening bracket, push it onto the stack
             if (c == '(' || c == '[' || c == '{') {
@@ -22,8 +21,7 @@ class Solution {
                 }
             }
         }
-        // If the stack is empty, all opening brackets have been closed, so return true
-        // Otherwise, there are unmatched opening brackets, so return false
+       
         return stack.isEmpty();
     }
 }
