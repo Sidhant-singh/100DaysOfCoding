@@ -13,7 +13,6 @@ class Solution {
             }
         }
         
-        // Convert result array to string
         StringBuilder sb = new StringBuilder();
         for (int digit : result) {
             if (!(sb.length() == 0 && digit == 0)) { // Skip leading zeros
