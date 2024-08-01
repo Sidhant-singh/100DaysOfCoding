@@ -14,31 +14,18 @@
  * }
  */
 class Solution {
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return buildTreeHelper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
-    }
-    
-    private TreeNode buildTreeHelper(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
-        if (preStart > preEnd || inStart > inEnd) {
-            return null;
-        }
-        
-        int rootValue = preorder[preStart];
-        TreeNode root = new TreeNode(rootValue);
-        
-        int rootIndex = 0;
-        for (int i = inStart; i <= inEnd; i++) {
-            if (inorder[i] == rootValue) {
-                rootIndex = i;
-                break;
-            }
-        }
-        
-        int leftSubtreeSize = rootIndex - inStart;
-        
-        root.left = buildTreeHelper(preorder, preStart + 1, preStart + leftSubtreeSize, inorder, inStart, rootIndex - 1);
-        root.right = buildTreeHelper(preorder, preStart + leftSubtreeSize + 1, preEnd, inorder, rootIndex + 1, inEnd);
-        
+    public TreeNode helper(int []preorder,int []inorder,int prelo,int prehi,int inlo,int inhi){
+        if(prelo>prehi || inlo>inhi) return null;
+        TreeNode root = new TreeNode(preorder[prelo]);
+        int r = 0;
+        while(inorder[r]!=preorder[prelo]) r++;
+        int leftSize = r-inlo;
+        root.left = helper(preorder,inorder,prelo+1,prelo+leftSize,inlo,r-1);
+        root.right = helper(preorder,inorder,prelo+leftSize+1,prehi,r+1,inhi);
         return root;
+    }
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int n = preorder.length;
+        return helper(preorder,inorder,0,n-1,0,n-1);
     }
 }
