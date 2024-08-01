@@ -14,21 +14,14 @@
  * }
  */
 class Solution {
+    public int levels(TreeNode root){
+        if(root==null) return 0;
+        return 1 + Math.max(levels(root.left),levels(root.right));
+    }
     public boolean isBalanced(TreeNode root) {
-        return getHeight(root) != -1;
+        if(root==null) return true;
+        int diff = Math.abs(levels(root.left)-levels(root.right));
+        if(diff>1) return false;
+        return isBalanced(root.left) && isBalanced(root.right);
     }
-    
-    private int getHeight(TreeNode node) {
-        if (node == null) return 0;
-        
-        int leftHeight = getHeight(node.left);
-        if (leftHeight == -1) return -1; // Left subtree is unbalanced
-        
-        int rightHeight = getHeight(node.right);
-        if (rightHeight == -1) return -1; // Right subtree is unbalanced
-        
-        if (Math.abs(leftHeight - rightHeight) > 1) return -1; // Tree is unbalanced
-        
-        return Math.max(leftHeight, rightHeight) + 1; // Return height of the current node
-    }
-    }
+}
