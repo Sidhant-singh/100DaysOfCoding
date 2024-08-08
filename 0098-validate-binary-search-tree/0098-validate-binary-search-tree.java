@@ -11,21 +11,27 @@
  *         this.left = left;
  *         this.right = right;
  *     }
- * }
- */
+ **/
 class Solution {
-    public void inorder(TreeNode root,List<Integer> arr){
-        if(root==null) return ;
-        inorder(root.left,arr);
-        arr.add(root.val);
-        inorder(root.right,arr);
+    static boolean flag;
+    public long maxi(TreeNode root){
+        if(root==null) return Long.MIN_VALUE;
+        long leftMax= maxi(root.left);
+        if(leftMax>=root.val) flag = false;
+        long rightMax = maxi(root.right);
+        return Math.max(root.val,Math.max(leftMax,rightMax));
+    }
+    public long mini(TreeNode root){
+        if(root==null) return Long.MAX_VALUE;
+        long leftMin = mini(root.left);
+        long rightMin = mini(root.right);
+        if(rightMin<=root.val) flag = false;
+        return Math.min(root.val,Math.min(leftMin,rightMin));
     }
     public boolean isValidBST(TreeNode root) {
-        List<Integer> arr = new ArrayList<>();
-        inorder(root,arr);
-        for(int i=1;i<arr.size();i++){
-            if(arr.get(i)<=arr.get(i-1)) return false;
-        }
-        return true;
+        flag = true;
+        maxi(root);
+        mini(root);
+        return flag;
     }
 }
