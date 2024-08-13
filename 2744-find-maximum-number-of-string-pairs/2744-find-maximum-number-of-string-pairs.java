@@ -11,6 +11,8 @@ class Solution {
             String rev = reverse(words[i]);
             if(set.contains(rev)){
                 count++;
+//                 if the array contains duplicates 
+                set.remove(rev);
             }
             else{
                 set.add(words[i]);
