@@ -1,23 +1,24 @@
-import java.util.Arrays;
-
 class Solution {
-    public int numSquares(int n) {
-        PerfectSquares solution = new PerfectSquares();
-        return solution.numSquares(n);
+    public boolean isPerfect(int n){
+        int sqrt = (int)(Math.sqrt(n));
+        if(sqrt*sqrt==n) return true;
+        return false;
     }
-
-    public class PerfectSquares {
-        public int numSquares(int n) {
-            int[] dp = new int[n + 1];
-            Arrays.fill(dp, Integer.MAX_VALUE);
-            dp[0] = 0;
-
-            for (int i = 1; i <= n; i++) {
-                for (int j = 1; j * j <= i; j++) {
-                    dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
-                }
-            }
-            return dp[n];
+    
+    public int minSquares(int n,int []dp) {
+        if(isPerfect(n)) return 1;
+        if(dp[n]!=-1) return dp[n];
+        int min = Integer.MAX_VALUE;
+        for(int i=1;i*i<=n;i++){
+            int count = minSquares(i*i,dp) + minSquares(n-i*i,dp);
+            min = Math.min(count,min);
         }
+        
+        return dp[n] = min;
+    }
+    public int numSquares(int n) {
+        int []dp = new int[n+1];
+        Arrays.fill(dp,-1);
+        return minSquares(n,dp);
     }
 }
