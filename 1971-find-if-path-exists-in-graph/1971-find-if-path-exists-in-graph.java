@@ -21,8 +21,21 @@ class Solution {
 
         boolean []vis = new boolean[n];
         vis[start] = true;
-        bfs(start,adj,vis,end);
-        return vis[end];
+        //bfs(start,adj,vis,end);
+        return dfs(start,adj,vis,end); 
+    }
+     private boolean dfs(int start, List<List<Integer>> adj, boolean[] vis,int end) {
+        vis[start] = true;
+         if(start==end) return true;
+        for(int ele : adj.get(start)){
+            if(!vis[ele]){
+                if(dfs(ele,adj,vis,end)){
+                    return true;
+                }
+            }
+        }
+         
+         return false;
     }
 
     private void bfs(int start, List<List<Integer>> adj, boolean[] vis,int end) {
