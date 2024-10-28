@@ -5,12 +5,24 @@ class Solution {
         boolean [] vis = new boolean[n];
         for(int i=0;i<n;i++){
             if(!vis[i]){
-                bfs(i,vis,adj);
+                //bfs(i,vis,adj);
+                dfs(i,vis,adj);
                 count++;
             }
         }
 
         return count;
+    }
+    
+    private void dfs(int i,boolean[] vis, int [][] adj) {
+        int n = adj.length;
+        vis[i] = true;
+        for(int j=0;j<n;j++){
+            if(adj[i][j]==1 && vis[j]==false){
+                dfs(j,vis,adj);
+            }
+        }
+        
     }
 
     private void bfs(int i,boolean[] vis, int [][] adj) {
