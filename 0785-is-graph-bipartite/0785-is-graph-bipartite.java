@@ -1,38 +1,52 @@
 class Solution {
-    static boolean ans;
-    public void bfs(int i,int [][]adj, int[]vis){
-        Queue<Integer> q = new LinkedList<>();
-        vis[i] = 0; // 1-> red && 0->blue
-        q.add(i);
-        while(q.size()>0){
-            int front = q.remove();
-            int color = vis[front];
-            for(int ele : adj[front]){
-                if(vis[ele]==vis[front]){
-                    ans = false;
-                    return;
-                }
-                if(vis[ele]==-1){
-                    vis[ele] = 1-color;
-                    q.add(ele);
-                }
+        static int []parent;
+    static int []size;
+    static boolean[]parity;
+    public int leader(int u){
+        if(parent[u]==u) return u;
+        return parent[u] = leader(parent[u]);
+    }
+    public void union(int u,int v){
+        int a = leader(u);
+        int b = leader(v);
+        if(a!=b){
+            if(size[a]>size[b]){
+                parent[b] = a;
+                size[a] += size[b];
+//                reverse the colors of the nodes
+                parity[v] = !parity[u];
+            }
+            else{
+                parent[a] = b;
+                size[b] += size[a];
+                parity[u] = !parity[v];
             }
         }
     }
-    public boolean isBipartite(int[][] adj) {
-        ans = true;
-        int n = adj.length;
-        int []vis = new int[n];
-        Arrays.fill(vis,-1);
-        // 1->red & 0->blue 
+    public boolean isBipartite(int[][] graph) {
+        int n = graph.length;
+        parent = new int[n];
+        size = new int[n];
+        parity = new boolean[n];
         for(int i=0;i<n;i++){
-            if(vis[i]==-1){
-                bfs(i,adj,vis);
-                if(ans == false) return ans;
+            parent[i] = i;
+            size[i] = 1;
+            parity[i] = false;
+        }
 
+        for(int i=0;i<graph.length;i++){
+            for(int j=0;j<graph[i].length;j++){
+                int u = i;
+                int v = graph[i][j];
+                if(v>u){
+                    if(leader(u)==leader(v)) { //cycle detected
+                        if(parity[u]==parity[v]) return false;
+                    }
+                    else union(u,v);
+                }
             }
         }
-        
-        return ans;
+        return true;
     }
+
 }
