@@ -3,7 +3,7 @@ class Solution {
         int m = image.length;
         int n = image[0].length;
         int startColor = image[sr][sc];
-        
+//         otherwise it will run in infinite loop
         if(startColor == color) return image;
         
         Queue<int[]> q = new LinkedList<>();
