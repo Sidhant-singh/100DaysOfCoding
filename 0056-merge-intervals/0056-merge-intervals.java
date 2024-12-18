@@ -11,6 +11,7 @@ class Solution {
         List<int[]> ans = new ArrayList<>();
         
         for (int[] inter : intervals) {
+//             prev end < curr start
             if (ans.isEmpty() || ans.get(ans.size() - 1)[1] < inter[0]) {
                 ans.add(inter); // Add non-overlapping interval
             } else {
